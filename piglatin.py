@@ -18,7 +18,7 @@ def PigLatin(word):
         upper = True
     word = word.lower()
 
-    # vowel sounds stay the same, just as 'way' to the end
+    # for voewl sounds, just as 'way' to the end without modifying the word
     if(word[0] == "a" or word[0] == "e" or word[0] == "i" or word[0] == "o" or word[0] == "u"):
         word = word + "w"
 
