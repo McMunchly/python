@@ -9,7 +9,7 @@ num1 = 1;
 num2 = 1;
 
 while(limit > 0):
-    # add the first wto digits first
+    # add the first two digits first
     if(len(numbers) < 2):
         numbers.append(num1)
 
