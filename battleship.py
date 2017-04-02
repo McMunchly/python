@@ -4,7 +4,6 @@ from random import randint
 
 print("Let's play Battleship!")
 
-
 board = []
 ships = []
 board_size = int(input("How big of a board do you want?: "))
