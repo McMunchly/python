@@ -40,7 +40,7 @@ def place_ships(board, ships, ship_count):
         # only count the ship if it's a new spot
         if [ship_row, ship_col] not in ships:
             ships.append([ship_row, ship_col])
-            #board[ship_row][ship_col] = "S"
+            board[ship_row][ship_col] = "S"
             count = count + 1
 
 # mark all ships that aren't destroyed
@@ -93,9 +93,9 @@ for turn in range(turn_count):
 
             board[guess_row][guess_col] = "X"
 
-        # turns are over
-        if(turn == turn_count - 1):
-            print "Game Over"
+    # turns are over
+    if(turn >= turn_count - 1):
+        print "Game Over"
 
 # mark all ships and display the board
 fill_ships(board, ships)
