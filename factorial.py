@@ -1,3 +1,5 @@
+# prints a factorial
+
 number = int(input("Enter which factorial you want: "))
 
 def factorial(x):
