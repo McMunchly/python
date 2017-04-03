@@ -1,16 +1,5 @@
 # turn a phrase into pig latin
 
-pyg = "ay"
-way = "way"
-
-sentence = input("Enter a sentence: ")
-
-newphrase = ""
-
-words = sentence.split(" ")
-
-reverser = 0
-
 def PigLatin(word):
     # check for upper capitalized words
     upper = False
@@ -36,16 +25,35 @@ def PigLatin(word):
 
     return word
 
-while reverser < len(words) :
-    newword = PigLatin(words[reverser]) + pyg
+def ToPigLatin(phrase):
+    pyg = "ay"
+    way = "way"
 
-    # move periods to the back
-    if("." in newword):
-        newword = newword.replace(".", "")
-        newword = newword + "."
+    newphrase = ""
 
-    # add word to the phrase
-    newphrase = newphrase + newword + " "
-    reverser = reverser + 1
+    reverser = 0
 
-print(newphrase)
+    words = phrase.split(" ")
+    print(words)
+    
+    while reverser < len(words) :
+        newword = PigLatin(words[reverser]) + pyg
+
+        # move periods to the back
+        if("." in newword):
+            newword = newword.replace(".", "")
+            newword = newword + "."
+
+        # add word to the phrase
+        newphrase = newphrase + newword + " "
+        reverser = reverser + 1
+
+    return newphrase
+
+def main():
+    phrase = input()
+    print(ToPigLatin(phrase))
+
+if __name__ == "__main__":
+    main()
+    
