@@ -25,7 +25,7 @@ def quit():
     print("K bye")
 
 print ("Omelet Quest: The Quest for the Perfect Omelet")
-print("by Samuel Dassler")
+print("---------------by Samuel Dassler---------------")
 choice = input("\n Are you ready? (y to play, n to quit): ")
 
 if choice == "y":
