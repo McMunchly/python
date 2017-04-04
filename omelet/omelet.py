@@ -4,7 +4,7 @@ import room
 import item
 
 def game():
-    print("YAY!")
+    print("---")
 
     game = True
     action = ""
@@ -59,6 +59,7 @@ def game():
 def quit():
     print("K bye")
 
+print("")
 print ("Omelet Quest: The Quest for the Perfect Omelet")
 print("---------------by Samuel Dassler---------------")
 choice = input("\n Are you ready? (y to play, n to quit): ")

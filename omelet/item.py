@@ -11,6 +11,7 @@ class Item(object):
 
 class SharkBook(Item):
     def Use(self):
+        super(SharkBook, self).Use()
         print("sharks hunt prey with electrocmagnetism!")
         return True
 
