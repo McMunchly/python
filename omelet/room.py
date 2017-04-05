@@ -10,11 +10,9 @@ class Room(object):
 
     def AddItem(self, item):
         self.items.append(item)
-        print("you drop " + item.name)
         
     def RemoveItem(self, item):
         self.items.remove(item)
-        print("you pick up " + item.name)
 
     def DisplayItems(self):
         if len(self.items) == 0:
@@ -24,6 +22,8 @@ class Room(object):
                 print(stuff.name)
         
 bedroom = Room("Bedroom", "your low-rent bedroom", [item.book])
-kitchen = Room("Kitchen", "your smelly kitchen", [item.omelet])
+kitchen = Room("Kitchen", "your smelly kitchen", [item.omelet, item.stove])
 
 rooms = [bedroom, kitchen]
+
+currentroom = bedroom

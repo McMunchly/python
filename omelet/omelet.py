@@ -9,15 +9,29 @@ def game():
     game = True
     action = ""
 
-    currentroom = room.bedroom
+    currentroom = room.currentroom
     currentitem = item.blankItem
     
     while game == True:
         print("You are standing in " + currentroom.description + " holding " + currentitem.name)
         action = input("action: ")
 
+        # split action into words for parsing
         action = action.split(" ")
-        
+        count = 0
+
+        # make it so commands don't have to be case sensitive
+        while count < len(action):
+            action[count] = action[count].lower()
+
+            if(count > 0):
+                newword = action[count]
+                action[count] = newword[0].upper() + newword[1:]
+                
+
+            count = count + 1
+
+        # figure out which command was entered
         if action[0] == "help":
             print("actions:")
             print("--------")
@@ -26,6 +40,7 @@ def game():
             print("take <item> - pick up the chosen item")
             print("use - use the item you are holding")
             print("drop - put down the item you are holding")
+            print("useon - use the current item on something else")
             print("quit - exit the game")
 
         elif action[0] == "enter":
@@ -35,6 +50,7 @@ def game():
                 for place in room.rooms:
                     if place.name == action[1]:
                         currentroom = place
+                        room.currentroom = place
         elif action[0] == "look":
             currentroom.DisplayItems()
         elif action[0] == "take":
@@ -43,13 +59,37 @@ def game():
             else:
                 for thing in currentroom.items:
                     if thing.name == action[1]:
-                        if currentitem != item.blankItem:
-                            currentroom.AddItem(currentitem)
+                        if thing.pickup == True:
+                            if currentitem != item.blankItem:
+                                currentroom.AddItem(currentitem)
+                                print("you drop " + currentitem.name)
                             
-                        currentitem = thing
-                        currentroom.RemoveItem(thing)
+                            currentitem = thing
+                            print("you pick up " + currentitem.name)
+                            currentroom.RemoveItem(thing)
+                        else:
+                            print("The " + thing.name + " is too heavy to pickup")
+                            
         elif action[0] == "use":
-            game = currentitem.Use()
+            if len(action) == 1:
+                if currentitem != item.blankItem:
+                    game = currentitem.Use()
+            else:
+                for thing in currentroom.items:
+                    if thing.name == action[1]:
+                       thing.Use()
+        elif action[0] == "useon":
+            if len(action) == 1:
+               print("You must specify what to use " + currentitem.name + " on")
+            else:
+               print("You use " + currentitem.name + " on the " + action[1])
+               for thing in currentroom.items:
+                   if thing.name == action[1]:
+                      result = thing.Useon(currentitem)
+
+                      if result == "drop":
+                        currentroom.AddItem(currentitem)
+                        currentitem = item.blankItem
         elif action[0] == "drop":
             currentroom.AddItem(currentitem)
             currentitem = item.blankItem
