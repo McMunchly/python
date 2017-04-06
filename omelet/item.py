@@ -54,3 +54,12 @@ book = SharkBook("Book", "Rad Shark Facts", True)
 omelet = Omelet("Omelet", "tasty omelet", True)
 burntOmelet = Omelet("Burntomelet", "nasty, gross omelet", True)
 stove = Stove("Stove", "A great way to cook eggs", False)
+
+items = [blankItem, ash, book, omelet, burntOmelet, stove]
+
+def FindItem(itemname):
+    for theitem in items:
+        if(itemname == theitem.name):
+            return theitem
+
+    print("Saved item not found")

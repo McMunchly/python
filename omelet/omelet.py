@@ -1,5 +1,7 @@
 # main file for omelet game
 
+import os.path
+
 import room
 import item
 
@@ -11,7 +13,24 @@ def game():
 
     currentroom = room.currentroom
     currentitem = item.blankItem
-    
+
+    if os.path.isfile("savefile.txt"):
+        load = input("Load a save file? (y/n): ")
+
+        if load == "y":
+            savefile = open("savefile.txt", "r")
+        
+            currentroom = room.FindRoom(savefile.readline().rstrip())
+            room.currentroom = currentroom
+            currentitem = item.FindItem(savefile.readline().rstrip())
+        
+            for bedroom in room.rooms:
+                if bedroom.name == "Bedroom":
+                    bedroom.InsertItems(savefile.readline())
+            for kitchen in room.rooms:
+                if kitchen.name == "Kitchen":
+                    kitchen.InsertItems(savefile.readline())
+        
     while game == True:
         print("You are standing in " + currentroom.description + " holding " + currentitem.name)
         action = input("action: ")
@@ -41,6 +60,7 @@ def game():
             print("use - use the item you are holding")
             print("drop - put down the item you are holding")
             print("useon - use the current item on something else")
+            print("save - save your game")
             print("quit - exit the game")
 
         elif action[0] == "enter":
@@ -93,6 +113,18 @@ def game():
         elif action[0] == "drop":
             currentroom.AddItem(currentitem)
             currentitem = item.blankItem
+        elif action[0] == "save":
+            savefile = open("savefile.txt", "w")
+            savefile.write(currentroom.name + "\n")
+            savefile.write(currentitem.name + "\n")
+
+            for theroom in room.rooms:
+                itemlist = ""
+                for items in theroom.items:
+                    itemlist = itemlist + items.name + " "
+                print(itemlist)
+                savefile.write(itemlist + "\n")
+            savefile.close()
         elif action[0] == "quit":
             game = False
             quit()
