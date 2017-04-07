@@ -14,9 +14,11 @@ def game():
     currentroom = room.currentroom
     currentitem = item.blankItem
 
+    # see if a save file exists
     if os.path.isfile("savefile.txt"):
         load = input("Load a save file? (y/n): ")
 
+        # load the save file
         if load == "y":
             savefile = open("savefile.txt", "r")
         
