@@ -30,9 +30,9 @@ def game():
             for kitchen in room.rooms:
                 if kitchen.name == "Kitchen":
                     kitchen.InsertItems(savefile.readline())
-        
-    while game == True:
+
         print("You are standing in " + currentroom.description + " holding " + currentitem.name)
+    while game == True:
         action = input("action: ")
 
         # split action into words for parsing
@@ -72,6 +72,7 @@ def game():
                         currentroom = place
                         room.currentroom = place
         elif action[0] == "look":
+            print("You are standing in " + currentroom.description + " holding " + currentitem.name)
             currentroom.DisplayItems()
         elif action[0] == "take":
             if len(action) == 1:
@@ -104,12 +105,15 @@ def game():
             else:
                print("You use " + currentitem.name + " on the " + action[1])
                for thing in currentroom.items:
-                   if thing.name == action[1]:
-                      result = thing.Useon(currentitem)
+                    if thing.name == action[1]:
+                        result = thing.Useon(currentitem)
 
-                      if result == "drop":
-                        currentroom.AddItem(currentitem)
-                        currentitem = item.blankItem
+                        if result == "drop":
+                           currentroom.AddItem(currentitem)
+                           currentitem = item.blankItem
+                        elif result == "remove":
+                            currentitem = item.blankItem
+                            
         elif action[0] == "drop":
             currentroom.AddItem(currentitem)
             currentitem = item.blankItem

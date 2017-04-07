@@ -1,4 +1,4 @@
-# definitions for room objects
+# definitions for rooms
 
 import item
 
@@ -30,7 +30,7 @@ class Room(object):
                     self.AddItem(theitem)
                     
 bedroom = Room("Bedroom", "your low-rent bedroom", [item.book])
-kitchen = Room("Kitchen", "your smelly kitchen", [item.omelet, item.stove])
+kitchen = Room("Kitchen", "your smelly kitchen", [item.eggs, item.bowl, item.stove])
 
 rooms = [bedroom, kitchen]
 

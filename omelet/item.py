@@ -1,4 +1,4 @@
-# definitions for item objects
+# definitions for item
 
 import room
 
@@ -18,6 +18,12 @@ class SharkBook(Item):
         print("sharks hunt prey with electrocmagnetism!")
         return True
 
+class Bowl(Item):
+    def Useon(self, item):
+        if(item == eggs):
+            room.currentroom.AddItem(eggbowl)
+            room.currentroom.RemoveItem(self)
+            return "remove"
 class Omelet(Item):
     def Use(self):
         print("you eat the " + self.description)
@@ -40,22 +46,26 @@ class Stove(Item):
 
             if(self.placeditem == omelet or self.placeditem == burntOmelet):
                 room.currentroom.AddItem(burntOmelet)
-
+            elif(self.placeditem == eggbowl):
+                room.currentroom.AddItem(omelet)
             else:
                 room.currentroom.AddItem(ash)
         
-    def Useon(self, Item):
-        self.placeditem = Item
+    def Useon(self, item):
+        self.placeditem = item
         return "drop"
     
 blankItem = Item("nothing", "there is nothing there", False)
 ash = Item("Ash", "A pile of burnt something or other", True)
-book = SharkBook("Book", "Rad Shark Facts", True)
+book = SharkBook("Book", "101 Rad Shark Facts", True)
+eggs = Item("Eggs", "a carton of eggs", True)
+bowl = Bowl("Bowl", "an empty mixing bowl", True)
+eggbowl = Item("Eggbowl", "a bowl with eggs mixed in it", True)
 omelet = Omelet("Omelet", "tasty omelet", True)
 burntOmelet = Omelet("Burntomelet", "nasty, gross omelet", True)
 stove = Stove("Stove", "A great way to cook eggs", False)
 
-items = [blankItem, ash, book, omelet, burntOmelet, stove]
+items = [blankItem, ash, book, eggs, bowl, eggbowl, omelet, burntOmelet, stove]
 
 def FindItem(itemname):
     for theitem in items:
