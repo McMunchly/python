@@ -16,4 +16,5 @@ def GetWord():
 
     return words[random.randint(0, len(words))]
 
-print(GetWord())
+if __name__ == "__main__":
+    print(GetWord())
