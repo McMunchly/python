@@ -14,15 +14,20 @@ def DisplayMap(area, size):
 def Move(move, coord, board):
     
     board[coord] = blank
-
-    if move == "up":
+    
+    if command == "w" and coord >= size:
+        print("move up")
         coord = coord - size
-    elif move == "down":
+    elif command == "s" and coord < len(bounds) - size:
+        print("move down")
         coord = coord + size
-    elif move == "left":
+    elif command == "a" and coord % size != 0:
+        print("move left")
         coord = coord - 1
-    elif move == "right":
+    elif command == "d" and (coord + 1) % size != 0:
+        print("move right")
         coord = coord + 1
+        
     board[coord] = "@"
 
     return board
@@ -42,21 +47,7 @@ while play == True:
     if command == "q":
         play = False
 
-    elif command == "w":
-        if coord >= size:
-            print("move up")
-            bounds = Move("up", coord, bounds)
-    elif command == "s":
-        if coord < len(bounds) - size:
-            print("move down")
-            bounds = Move("down", coord, bounds)
-    elif command == "a":
-        if coord % size != 0:
-            print("move left")
-            bounds = Move("left", coord, bounds)
-    elif command == "d":
-        if (coord + 1) % size != 0:
-            print("move right")
-            bounds = Move("right", coord, bounds)
+    else:
+        bounds = Move(command, coord, bounds)
             
     coord = bounds.index("@")
