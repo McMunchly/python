@@ -6,9 +6,9 @@ import glob
 
 if len(sys.argv) == 1:
     print("You need to supply a filename")
-    
+
 else:
-    for name in glob.glob(sys.argv[1]):
+    for name in glob.glob(sys.argv[1] + ".c"):
         if len(sys.argv) < 3:
             print("filename already in use. File not created")
         elif sys.argv[2] == "o":
