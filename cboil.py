@@ -1,4 +1,5 @@
-# create a c boilerplate
+#!/Library/Frameworks/Python.framework/Versions/3.5/bin/python3
+# create a c boilerplate file
 
 import sys
 import glob
@@ -13,5 +14,5 @@ else:
         elif sys.argv[2] == "o":
             print(sys.argv[1], "was overwritten")
 
-    with open(sys.argv[1], "w") as file:
+    with open(sys.argv[1] + ".c", "w") as file:
         file.write("/*  */\n#include <stdio.h>\n\nint main(void)\n{\n    return 0;\n}")
