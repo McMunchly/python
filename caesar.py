@@ -4,22 +4,19 @@ phrase = input("Enter a phrase: ")
 number = int(input("Enter number of letters to shift: "))
 
 coded = ""
-lowerZ = 122
-upperZ = 90
+lowerA = 97
+upperA = 65
 upper = 0;
 
 for i in phrase:
     if str.isalpha(i):
         if str.isupper(i):
-            upper = upperZ
+            upper = upperA
         else:
-            upper = lowerZ
+            upper = lowerA
             
-        i = ord(i) + number
+        i = upper + ((ord(i) - upper) + number) % 26
         
-        if(i > upper):
-            i = i - 26
-
         coded += chr(i)
     else:
         coded += i
