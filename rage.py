@@ -1,8 +1,10 @@
 import random
 random.seed
+
 print("LORELEI sent out DEWGONG!")
 print("Go! PRIMATE!")
 print("PRIMATE used RAGE!")
+
 count = int(input("How many tries to escape?: "))
 
 for x in range(0, count):
@@ -21,4 +23,4 @@ for x in range(0, count):
     else:
         print("Attempt " + str(x + 1) + ": failed at pp = " + str(pp))
 
-print("Enemy DEWGONG used Rest!")
+print("Enemy DEWGONG used REST!")
