@@ -19,7 +19,7 @@ for x in range(0, count):
             break
     
     if(pp == 0):
-        print("Softlock escaped!!!");
+        print("PRIMAPE used STRUGGLE!");
     else:
         print("Attempt " + str(x + 1) + ": failed at pp = " + str(pp))
 
