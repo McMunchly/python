@@ -33,10 +33,13 @@ def game():
                 if kitchen.name == "Kitchen":
                     kitchen.InsertItems(savefile.readline())
 
-        print("You are standing in " + currentroom.description + " holding " + currentitem.name)
+        print("Your stomach starts to rumble...")
+        
     while game == True:
-        action = input("action: ")
-
+        print()
+        action = input("Command? (press help to see actions): ")
+        print()
+        
         # split action into words for parsing
         action = action.split(" ")
         count = 0
@@ -45,11 +48,6 @@ def game():
         while count < len(action):
             action[count] = action[count].lower()
 
-            if(count > 0):
-                newword = action[count]
-                action[count] = newword[0].upper() + newword[1:]
-                
-
             count = count + 1
 
         # figure out which command was entered
@@ -57,11 +55,12 @@ def game():
             print("actions:")
             print("--------")
             print("enter <room> - enter the chosen room")
-            print("look - observe your surroundings")
             print("take <item> - pick up the chosen item")
             print("use - use the item you are holding")
             print("drop - put down the item you are holding")
+            print("examine - look closer at the item you are holding")
             print("useon - use the current item on something else")
+            print("look - look around the current room")
             print("save - save your game")
             print("quit - exit the game")
 
@@ -73,15 +72,16 @@ def game():
                     if place.name == action[1]:
                         currentroom = place
                         room.currentroom = place
-        elif action[0] == "look":
-            print("You are standing in " + currentroom.description + " holding " + currentitem.name)
-            currentroom.DisplayItems()
+                        room.Display(currentroom, currentitem.name)
         elif action[0] == "take":
             if len(action) == 1:
                 print("You must specify which item to take")
             else:
+                found = False
+                
                 for thing in currentroom.items:
                     if thing.name == action[1]:
+                        found = True
                         if thing.pickup == True:
                             if currentitem != item.blankItem:
                                 currentroom.AddItem(currentitem)
@@ -92,22 +92,39 @@ def game():
                             currentroom.RemoveItem(thing)
                         else:
                             print("The " + thing.name + " is too heavy to pickup")
+
+                if found == False:
+                    print(action[1] + " not found")
+                        
                             
         elif action[0] == "use":
             if len(action) == 1:
                 if currentitem != item.blankItem:
                     game = currentitem.Use()
+                else:
+                    print("You are not holding anything")
             else:
+                found = False
+                
                 for thing in currentroom.items:
+
                     if thing.name == action[1]:
-                       thing.Use()
+                        found = True
+                        thing.Use()
+                       
+                if found == False:
+                    print(action[1] + " not found")
         elif action[0] == "useon":
             if len(action) == 1:
                print("You must specify what to use " + currentitem.name + " on")
             else:
-               print("You use " + currentitem.name + " on the " + action[1])
-               for thing in currentroom.items:
+                found = False
+                                    
+                for thing in currentroom.items:
+                   
                     if thing.name == action[1]:
+                        print("You use " + currentitem.name + " on the " + action[1])
+                        found = True
                         result = thing.Useon(currentitem)
 
                         if result == "drop":
@@ -116,9 +133,16 @@ def game():
                         elif result == "remove":
                             currentitem = item.blankItem
                             
+                if found == False:
+                    print(action[1] + " not found")
+                            
         elif action[0] == "drop":
             currentroom.AddItem(currentitem)
             currentitem = item.blankItem
+        elif action[0] == "examine":
+            print(currentitem.description)
+        elif action[0] == "look":
+            room.Display(currentroom, currentitem.name)
         elif action[0] == "save":
             savefile = open("savefile.txt", "w")
             savefile.write(currentroom.name + "\n")
@@ -134,15 +158,14 @@ def game():
         elif action[0] == "quit":
             game = False
             quit()
+        else:
+            print("Invalid command")
 def quit():
     print("K bye")
 
 print("")
 print ("Omelet Quest: The Quest for the Perfect Omelet")
 print("---------------by Samuel Dassler---------------")
-choice = input("\n Are you ready? (y to play, n to quit): ")
 
-if choice == "y":
-    game()
-else:
-    quit()
+game()
+print()
