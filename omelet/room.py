@@ -29,7 +29,7 @@ class Room(object):
 
     def DisplayConnections(self):
         for stuff in self.connections:
-            print("You see a door leading to the", end = " ")
+            print("A door leads to the", end = " ")
             print(stuff.name)
                 
     def InsertItems(self, itemlist):

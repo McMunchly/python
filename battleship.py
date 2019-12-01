@@ -1,6 +1,8 @@
 # play battleship against the computer
 
 from random import randint
+import os
+clear = lambda: os.system('clear')
 
 print("Let's play Battleship!")
 
@@ -12,7 +14,7 @@ turn_count = int(ship_count * 3)
 
 # create the board grid
 for x in range(board_size):
-    board.append(["O"] * board_size)
+    board.append(["~"] * board_size)
 
 # print the board visual
 def print_board(board):
@@ -47,18 +49,51 @@ def fill_ships(board, ships):
     for cord in ships:
         if board[cord[0]][cord[1]] != "*":
             board[cord[0]][cord[1]] = "S"
-            
+
+# check for user input to quit game
+def check_quit(command):
+    command = command.lower()
+    
+    if command[0] == "q":
+        print("Goodbye")
+        exit()
+        
 place_ships(board, ships, ship_count)
+clear()
+print()
 
 # game loop
 for turn in range(turn_count):
     #print(ships)
     print("Turns remaining: " + str(turn_count - turn) + " | Ships remaining: " + str(ship_count))
     print_board(board)
-            
-    guess_row = int(input("Guess Row: "))
-    guess_col = int(input("Guess Column: "))
 
+    while True:
+        guess_row = input("Guess Row ('q' to quit): ")
+        check_quit(guess_row)
+            
+        guess_col = input("Guess Column ('q' to quit): ")
+        check_quit(guess_col)
+        
+        try:
+            val = int(guess_row)
+        except ValueError:
+            print("Invalid row input")
+            continue
+
+        try:
+            val = int(guess_col)
+        except ValueError:
+            print("Invalid column input")
+            continue
+
+        # if the program gets here, both row and column are valid ints
+        guess_row = int(guess_row)
+        guess_col = int(guess_col)
+        break
+
+    clear()
+    
     # currect guess
     if [guess_row, guess_col] in ships:
         print("Congratulations! You sunk my battleship!")

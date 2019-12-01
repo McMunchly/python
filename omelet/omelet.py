@@ -19,20 +19,41 @@ def game():
         # load the save file
         if load == "y":
             savefile = open("savefile.txt", "r")
-        
+
             currentroom = room.FindRoom(savefile.readline().rstrip())
             room.currentroom = currentroom
             currentitem = item.FindItem(savefile.readline().rstrip())
-        
-            for bedroom in room.rooms:
-                if bedroom.name == "Bedroom":
-                    bedroom.InsertItems(savefile.readline())
-            for kitchen in room.rooms:
-                if kitchen.name == "Kitchen":
-                    kitchen.InsertItems(savefile.readline())
 
+            for nextroom in room.rooms:
+                line = savefile.readline()
+                nextroom.InsertItems(line)
+
+            bools = []
+            # set variables of the omelet
+            records = savefile.readline().split(" ")
+            for x in records:
+                if x == "True":
+                    bools.append(True)
+                else:
+                    bools.append(False)
+            item.omelet.SetVars(bool(bools[0]), bool(bools[1]))
+
+            bools = []
+            # set variables of the bowl
+            records = savefile.readline().split(" ")
+            for x in records:
+                if x == "True":
+                    bools.append(True)
+                else:
+                    bools.append(False)
+            item.bowl.SetVars(bool(bools[0]), bool(bools[1]), bool(bools[2]))
+            
+            savefile.close()
+
+        print()
         print("Your stomach starts to rumble...")
-        
+        print()
+        room.Display(currentroom, currentitem.name)
     while game == True:
         print()
         action = input("Command? (press help to see actions): ")
@@ -152,11 +173,15 @@ def game():
             savefile.write(currentitem.name + "\n")
 
             for theroom in room.rooms:
-                itemlist = ""
+                itemlist = theroom.name + " "
                 for items in theroom.items:
                     itemlist = itemlist + items.name + " "
                 print(itemlist)
                 savefile.write(itemlist + "\n")
+
+            savefile.write(str(item.omelet.fluffy) + " " + str(item.omelet.filling) + "\n")
+            savefile.write(str(item.bowl.haseggs) + " " + str(item.bowl.haswater) + " " + str(item.bowl.mixed) + "\n")
+
             savefile.close()
         elif action[0] == "quit":
             game = False

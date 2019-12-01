@@ -31,14 +31,18 @@ class Bowl(Item):
         self.name = name
         self.description = description
         self.pickup = pickup
-        self.placeditem = None
         self.haseggs = False
         self.haswater = False
         self.mixed = False
 
-    def Description():
-        if haseggs == True:
-            if self.hawater == True:
+    def SetVars(self, haseggs, haswater, mixed):
+        self.haseggs = haseggs
+        self.haswater = haswater
+        self.mixed = mixed
+        
+    def Description(self):
+        if self.haseggs == True:
+            if self.haswater == True:
                 if self.mixed == True:
                     print("It's a perfect mixture of eggs and just enough water for maximum fluffiness")
                 else:
@@ -70,10 +74,13 @@ class Omelet(Item):
         self.name = name
         self.description = description
         self.pickup = pickup
-        self.placeditem = None
         self.fluffy = False
         self.filling = False
-    
+
+    def SetVars(self, fluffy, filling):
+        self.fluffy = fluffy
+        self.filling = filling
+        
     def Use(self):
         if self.fluffy == True:
             if self.filling == True:
@@ -132,16 +139,16 @@ class Sink(Item):
             bowl.haswater = True
     
 blankItem = Item("nothing", "there is nothing there", False)
-ash = Item("ash", "A pile of burnt something or other", True)
+ash = Item("ash", "a pile of burnt something or other", True)
 book = Book("sharkbook", "101 Rad Shark Facts", True, "sharks hunt prey with electrocmagnetism!")
-cookbook = Book("cookbook", "How to cook an omelet", True, "Whisk eggs and water and cook on a stovetop. Add filling and enjoy")
+cookbook = Book("cookbook", "How to cook an omelet", True, "whisk eggs and water and cook on a stovetop. Add filling and enjoy")
 eggs = Item("eggs", "a carton of eggs", True)
-whisk = Item("whisk", "a utinsel for mixing ingredients", True)
+whisk = Item("whisk", "a utensil for mixing ingredients", True)
 bowl = Bowl("bowl", "a bowl for mixing", True)
 filling = Item("filling", "fresh veggies for the omelet", True)
-omelet = Omelet("omelet", "tasty omelet", True)
-sink = Sink("sink", "Delivers cold, clean water", False)
-stove = Stove("stove", "A great way to cook eggs", False)
+omelet = Omelet("omelet", "delicious and filling", True)
+sink = Sink("sink", "delivers cold, clean water", False)
+stove = Stove("stove", "a great way to cook eggs", False)
 
 items = [blankItem, ash, book, cookbook, eggs, bowl, whisk, filling, omelet, stove, sink]
 
