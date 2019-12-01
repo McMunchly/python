@@ -6,8 +6,6 @@ import room
 import item
 
 def game():
-    print("---")
-
     game = True
     action = ""
 
@@ -68,11 +66,16 @@ def game():
             if len(action) == 1:
                 print("You must specify which room to enter")
             else:
-                for place in room.rooms:
+                found = False
+                for place in currentroom.connections:
                     if place.name == action[1]:
+                        found = True
                         currentroom = place
                         room.currentroom = place
                         room.Display(currentroom, currentitem.name)
+                if found == False:
+                    print("There is no way to get there from here")
+                        
         elif action[0] == "take":
             if len(action) == 1:
                 print("You must specify which item to take")
@@ -110,7 +113,7 @@ def game():
 
                     if thing.name == action[1]:
                         found = True
-                        thing.Use()
+                        game = thing.Use()
                        
                 if found == False:
                     print(action[1] + " not found")
@@ -140,7 +143,7 @@ def game():
             currentroom.AddItem(currentitem)
             currentitem = item.blankItem
         elif action[0] == "examine":
-            print(currentitem.description)
+            currentitem.Description()
         elif action[0] == "look":
             room.Display(currentroom, currentitem.name)
         elif action[0] == "save":

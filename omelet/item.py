@@ -12,6 +12,9 @@ class Item(object):
         print("can't use " + self.name + " by itself")
         return True
 
+    def Description(self):
+        print(self.description)
+
 class Book(Item):
     def __init__(self, name, description, pickup, text):
         self.name = name
@@ -32,13 +35,33 @@ class Bowl(Item):
         self.haseggs = False
         self.haswater = False
         self.mixed = False
-        
+
+    def Description():
+        if haseggs == True:
+            if self.hawater == True:
+                if self.mixed == True:
+                    print("It's a perfect mixture of eggs and just enough water for maximum fluffiness")
+                else:
+                    print("The eggs and water are in perfect proportion, but it's not mixed")
+            else:
+                if self.mixed == True:
+                    print("It's a bunch of whisked eggs")
+                else:
+                    print("It's a bunch of eggs in a bowl") 
+        else:
+            if self.haswater == True:
+                print("It's filled with water")
+            else:
+                print("It's just an empty bowl")
+                
     def Useon(self, item):
         if item == eggs:
             self.haseggs = True
+            print("You crack the eggs into the bowl")
             return "remove"
         if item == whisk:
             if self.haseggs == True and self.haswater == True:
+                print("You whisk up the eggs and water")
                 self.mixed = True
                 return "drop"
 
@@ -61,7 +84,7 @@ class Omelet(Item):
             if self.filling:
                 print("You win! The omelet is stuffed, but it's all kind of flat")
             else:
-                print("You lose...These eggs are well-cooked, but it's not whisked or filled")
+                print("You lose...These are just eggs, burnt to a crisp")
         return False
 
     def Useon(self, item):
@@ -79,34 +102,39 @@ class Stove(Item):
 
     def Use(self):
         if self.placeditem != None:
-            print(self.placeditem.name + " was cooked to perfection")
-
-            if self.placeditem == omelet:
-                omelet.state = 3
-            elif self.placeditem == bowl:
+            if self.placeditem == bowl:
 
                 if bowl.haseggs == False:
-                    print("You've begun boiled water in the pan")
-                    return
+                    print("Water begins to boil")
+                    return True
                 else:
                     omelet.fluffy = bowl.mixed
 
+                print("Your creation is cooked to perfection")
                 room.currentroom.RemoveItem(self.placeditem)
                 room.currentroom.AddItem(omelet)
+                return True
+            else:
+                print("You lose...A fire starts and burns down the building")
+                return False
+        else:
+            print("You turn the stove on but there's nothing in the pan on the burner")
         
     def Useon(self, item):
+        print("You place the " + item.name + " into the pan on the stove")
         self.placeditem = item
         return "drop"
 
 class Sink(Item):
     def Useon(self, item):
         if item == bowl:
+            print("You pour some water into the bowl")
             bowl.haswater = True
     
 blankItem = Item("nothing", "there is nothing there", False)
 ash = Item("ash", "A pile of burnt something or other", True)
 book = Book("sharkbook", "101 Rad Shark Facts", True, "sharks hunt prey with electrocmagnetism!")
-cookbook = Book("cookbook", "How to cook an omelet", True, "Whisk eggs and water and cook on a stoptop for 5 minutes. Add filling and enjoy")
+cookbook = Book("cookbook", "How to cook an omelet", True, "Whisk eggs and water and cook on a stovetop. Add filling and enjoy")
 eggs = Item("eggs", "a carton of eggs", True)
 whisk = Item("whisk", "a utinsel for mixing ingredients", True)
 bowl = Bowl("bowl", "a bowl for mixing", True)
