@@ -16,13 +16,14 @@ def Game():
         dec_guess = True
         PrintWord(progress)
         PrintArt(invalid_guesses, max_guess)
+        PrintGuesses(guesslist)
+        
         #print("Guesses remaining: " + str(max_guess - invalid_guesses))
         guess = input("Guess your letter: ")
 
         guess = guess.upper()
 
         if(guess == "QUIT"):
-            print("Quitting...")
             break;
         
         if guess not in guesslist:
@@ -39,8 +40,11 @@ def Game():
 
         if("_" not in progress):
             PrintWord(progress)
-            print("You Win!")
+            print("-----------")
+            print("You Win!!!")
+            print("-----------")
             print("It took you " + str(guesses) + " tries to guess the word " + word)
+            print()
             break;
 
         if(dec_guess == True):
@@ -90,8 +94,16 @@ def PrintArt(guesses, max_gs):
         print("    / \\")
 
     for x in range(0, max_gs - guesses):
-        print("")
-             
+        print()
+
+def PrintGuesses(guesses):
+    print("Current guesses:", end = " ")
+    
+    for letter in guesses:
+        print(letter, end = " ")
+        
+    print()
+        
 if __name__ == "__main__":
     Game()
     
