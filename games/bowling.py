@@ -2,9 +2,8 @@
 import random
 random.seed
 
-test = 5
+
 testing = False
-frame = 0
 frames = 10
 total = 0
 score1 = 0
@@ -14,75 +13,91 @@ balls = []
 frameResults = []
 
 for i in range(frames):
+    print("Frame: " + str(i + 1))
+    
     if testing:
-        score1 = test
-    else:
         score1 = int(input())
-        #score1 = random.randint(0,10)
-        
+    else:
+        score1 = random.randint(0,10)
+
     balls.append(score1)
 
     if testing:
-        score2 = test
-    else:
-        #score2 = random.randint(0, 10 - score1)
         score2 = int(input())
-    
-    if score1 != 10:
+    else:
+        score2 = random.randint(0, 10 - score1)
+
+    if score1 == 10:
+        print("STRIKE!!!")
+    else:
+        print(score1)
         balls.append(score2)
+        
+        if score1 + score2 == 10:
+            print("Spare!")
+        else:
+            print(score2)
         
     if i == frames - 1:
         if score1 == 10:
             if testing:
-                score2 = test
-            else:
-                #score2 = random.randint(0, 10)
                 score2 = int(input())
+
+                if score1 + score2 == 10:
+                    print("Spare!")
+            else:
+                score2 = random.randint(0, 10)
+
+            if score2 == 10:
+                print("STRIKE!!!")
             balls.append(score2)
         if score1 + score2 >= 10:
             if testing:
-                score3 = test
+                score3 = int(input())
             else:
                 if score2 == 10:
-                    #score3 = random.randint(0, 10)
-                    score3 = int(input())
+                    score3 = random.randint(0, 10)
                 else:
-                    #score3 = random.randint(0, 10 - score2)
-                    score3 = int(input())
+                    score3 = random.randint(0, 10 - score2)
+
+            if score1 == 10:
+                print("STRIKE!!!")
             balls.append(score3)
 
 print(balls)
 prev = 0
 skip = True
+frame = 1
 for i in range(len(balls)):
     if balls[i] == 10:
-        print(i, balls[i])
         total += 10 + balls[i + 1] + balls[i + 2]
         frameResults.append(total)
         if i >= len(balls) - 3:
-            total += balls[i + 1] + balls[i + 2]
-            frameResults.append(total)
-            print("strikeexit")
+            if frame == 9:
+                print("swoop")
+                total += balls[i + 1] + balls[i + 2]
+                frameResults.append(total)
             break
         prev = balls[i]
         skip = True
+        frame += 1
         continue
     if skip == False and i != 0:
-            print(i, balls[i], prev)
             if balls[i] + prev == 10:
                 total += 10 + balls[i + 1]
                 frameResults.append(total)
                 if i >= len(balls) - 1:
-                    print("spareexit")
                     break
             else:
                 total += balls[i] + prev
                 frameResults.append(total)
                 if i >= len(balls):
-                    print("exit")
                     break
         
     prev = balls[i]
     skip = not skip
+    if i % 2 == 0:
+        frame += 1
         
 print(frameResults)
+print("Your final score is: " + str(total))
